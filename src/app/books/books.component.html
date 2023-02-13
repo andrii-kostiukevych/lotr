@@ -1,0 +1,9 @@
+<h1>Lord of The Rings API</h1>
+
+<vega-table
+  rowKey="_id"
+  rowExpandable
+  [dataSource]="books"
+  [columns]="columns">
+    <div *ngFor="let item of books" slot="vega-table-expand-row-{{item._id}}">Chapters: </div>
+</vega-table>
