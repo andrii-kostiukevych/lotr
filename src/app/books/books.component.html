@@ -1,9 +1,20 @@
-<h1>Lord of The Rings API</h1>
+<div class="v-bg-accent7-primary v-p-size-16">
+  <h2 class="v-font-h2 v-text-primary">Lord of The Rings</h2>
+</div>
 
-<vega-table
-  rowKey="_id"
-  rowExpandable
-  [dataSource]="books"
-  [columns]="columns">
-    <div *ngFor="let item of books" slot="vega-table-expand-row-{{item._id}}">Chapters: </div>
-</vega-table>
+<vega-accordion *ngFor="let book of books"
+  drawsBackground="true"
+  expandIconAlign="left"
+  expand="false"
+  iconPosition="top"
+  [groupId]="book._id"
+  [accordionTitle]="book.name"
+  (vegaExpand)="onClick(book, $event)"
+>
+  <ul slot="accordion-content">
+    <li *ngFor="let chapter of book.chapters">{{chapter.chapterName}}</li>
+  </ul>
+</vega-accordion>
+
+
+

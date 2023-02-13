@@ -1,10 +1,11 @@
-import { HttpClientModule} from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { VegaComponentModule } from '@heartlandone/vega-angular';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BooksComponent } from './books/books.component';
+import {HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {VegaComponentModule} from '@heartlandone/vega-angular';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BooksComponent} from './books/books.component';
+import {BooksService} from './books/books.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { BooksComponent } from './books/books.component';
     AppRoutingModule,
     VegaComponentModule
   ],
-  providers: [],
+  providers: [BooksService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

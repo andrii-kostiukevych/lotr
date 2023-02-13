@@ -1,7 +1,7 @@
-import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
-import {BookTypeData} from './book-type-data';
-import {ChapterTypeData} from './chapter-type-data';
+import {tap} from 'rxjs';
+import {BooksService} from './books.service';
+import {FullBookTypeData} from './types/full-book-type-data';
 
 @Component({
   selector: 'app-books',
@@ -9,29 +9,30 @@ import {ChapterTypeData} from './chapter-type-data';
   styleUrls: ['./books.component.scss']
 })
 export class BooksComponent implements OnInit {
-  private apiBaseURI = 'https://the-one-api.dev/v2';
-  public books?: BookTypeData[];
-  public chapters?: ChapterTypeData[];
+  public books: FullBookTypeData[] = [];
   public columns = [
     {
-      label: 'Book Name',
+      label: 'Book Name: ',
       prop: 'name'
     }
   ]
 
-  constructor(private http: HttpClient) { }
+  constructor(private booksService: BooksService) {
+  }
 
   ngOnInit(): void {
-    this.getBooks();
+    this.booksService.getBooks()
+      .pipe(tap((data) => this.books = data.docs))
+      .subscribe();
   }
 
-  private getBooks() {
-    return this.http.get(`${this.apiBaseURI}/book`)
-      .subscribe((value: any) => this.books = value.docs);
-  }
-
-  private getChapters(id: string) {
-    return this.http.get(`${this.apiBaseURI}/book/${id}/chapter`)
-      .subscribe((value: any) => this.chapters = value.docs);
+  onClick(book: FullBookTypeData, event: any) {
+    if (event.detail) {
+      this.booksService.getChapters(book._id)
+        .pipe(tap((data) => {
+          book.chapters =  data.docs;
+        }))
+        .subscribe();
+    }
   }
 }
