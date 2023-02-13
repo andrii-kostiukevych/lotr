@@ -2,6 +2,8 @@
   <h2 class="v-font-h2 v-text-primary">Lord of The Rings</h2>
 </div>
 
+<h4 class="v-font-h4 v-p-size-16">Books:</h4>
+
 <vega-accordion *ngFor="let book of books"
   drawsBackground="true"
   expandIconAlign="left"
@@ -11,9 +13,13 @@
   [accordionTitle]="book.name"
   (vegaExpand)="onClick(book, $event)"
 >
-  <ul slot="accordion-content">
-    <li *ngFor="let chapter of book.chapters">{{chapter.chapterName}}</li>
-  </ul>
+  <div slot="accordion-content">
+    <div class="v-font-field-label v-pb-size-8">Chapters: </div>
+    <ul>
+      <li *ngFor="let chapter of book.chapters" class="v-font-field-value">{{chapter.chapterName}}</li>
+    </ul>
+  </div>
+
 </vega-accordion>
 
 
