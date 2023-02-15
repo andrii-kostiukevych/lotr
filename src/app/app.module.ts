@@ -1,16 +1,22 @@
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {VegaComponentModule} from '@heartlandone/vega-angular';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {AuthInterceptor} from './auth-interceptor/auth-interceptor';
 import {BooksComponent} from './books/books.component';
 import {BooksService} from './books/books.service';
+import {MoviesComponent} from './movies/movies.component';
+import {MoviesService} from './movies/movies.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BooksComponent
+    BooksComponent,
+    MoviesComponent,
+    PageNotFoundComponent
   ],
   imports: [
     HttpClientModule,
@@ -18,7 +24,15 @@ import {BooksService} from './books/books.service';
     AppRoutingModule,
     VegaComponentModule
   ],
-  providers: [BooksService],
+  providers: [
+    MoviesService,
+    BooksService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

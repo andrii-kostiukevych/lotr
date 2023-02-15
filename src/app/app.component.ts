@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'lotr';
+  public tabItems = [
+    { label: 'Books', dataTarget: 'nav-books' },
+    { label: 'Movies', dataTarget: 'nav-movies' }
+  ];
 }
