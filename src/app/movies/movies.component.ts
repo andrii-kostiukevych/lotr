@@ -9,11 +9,16 @@ import {MoviesService} from './movies.service';
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
+  public movie?: MovieTypeData;
+  public showModal = false;
   public movies: MovieTypeData[] = [];
   public columns = [
     {
       label: 'Name',
-      prop: 'name'
+      prop: 'name',
+      sorter: (a: MovieTypeData, b: MovieTypeData) => {
+        return a.name.localeCompare(b.name);
+      },
     },
     {
       label: 'Tomatoes Score',
@@ -25,15 +30,33 @@ export class MoviesComponent implements OnInit {
     },
     {
       label: 'Budget',
-      prop: 'budgetInMillions'
-    },
-    {
-      label: 'Revenue In Millions',
-      prop: 'boxOfficeRevenueInMillions'
+      prop: 'budgetInMillions',
+      align: 'right'
     },
     {
       label: 'Run Time (in minutes)',
-      prop: 'runtimeInMinutes'
+      prop: 'runtimeInMinutes',
+      align: 'right',
+      sorter: (a: MovieTypeData, b: MovieTypeData) => {
+        return a.runtimeInMinutes - b.runtimeInMinutes;
+      }
+    },
+    {
+      label: 'Action',
+      render: (createElement: any, value: any, record: MovieTypeData) => {
+        return createElement(
+          'vega-button',
+          {
+            'data-shrink': 0,
+            'size': 'small',
+            'onVegaClick': () => {
+              this.movie = record;
+              this.showModal = true
+            },
+          },
+          'Detail',
+        );
+      }
     }
   ]
 
@@ -43,6 +66,10 @@ export class MoviesComponent implements OnInit {
     this.moviesService.getMovie()
       .pipe(tap((data) => this.movies = data.docs))
       .subscribe();
+  }
+
+  public onVegaClick() {
+    this.showModal = false;
   }
 
 }

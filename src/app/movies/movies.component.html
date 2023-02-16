@@ -4,3 +4,24 @@
   rowKey="_id"
   [dataSource]="movies"
   [columns]="columns"></vega-table>
+
+<vega-modal
+  showCloseButton="false"
+  size="400"
+  backdrop="static"
+  [open]=showModal>
+
+  <div slot='modal-title'>{{movie?.name}}</div>
+  <div slot='modal-content'>
+    <p class="v-font-field-label">Award Nominations:{{movie?.academyAwardNominations}}</p>
+    <p class="v-font-field-label">Award Wins: {{movie?.academyAwardWins}}</p>
+    <p class="v-font-field-label">Box Office Revenue (millions): ${{movie?.boxOfficeRevenueInMillions}}</p>
+    <p class="v-font-field-label">Budget (millions): ${{movie?.budgetInMillions}}</p>
+    <p class="v-font-field-label">Rotten Tomatoes Score: {{movie?.rottenTomatoesScore}}</p>
+    <p class="v-font-field-label">Runtime: {{movie?.runtimeInMinutes}} minutes</p>
+  </div>
+  <div slot='modal-footer'>
+    <vega-button data-dismiss="modal" (click)="onVegaClick()">Close</vega-button>
+  </div>
+</vega-modal>
+

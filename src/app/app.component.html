@@ -7,22 +7,9 @@
     id="web-tab-group"
     gap="size-8"
     showCloseButton="false"
+    [selectedTabDataTarget]="currentTab"
+    (vegaClick)="onTabClick($event)"
     [tabItems]="tabItems">
   </vega-tab-group>
-  <div class="vega-tab-group-content v-pt-size-8 v-text-primary">
-    <div class="vega-tab-group-pane active" id="nav-books">
-      <app-books></app-books>
-    </div>
-    <div class="vega-tab-group-pane" id="nav-movies">
-      <app-movies></app-movies>
-    </div>
-  </div>
+  <router-outlet></router-outlet>
 </div>
-
-<!--<nav>-->
-<!--  <ul>-->
-<!--    <li><a routerLink="/books" routerLinkActive="active" ariaCurrentWhenActive="page">Books</a></li>-->
-<!--    <li><a routerLink="/movies" routerLinkActive="active" ariaCurrentWhenActive="page">Movies</a></li>-->
-<!--  </ul>-->
-<!--</nav>-->
-<!--<router-outlet></router-outlet>-->

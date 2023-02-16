@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public tabItems = [
-    { label: 'Books', dataTarget: 'nav-books' },
-    { label: 'Movies', dataTarget: 'nav-movies' }
+    {label: 'Books', dataTarget: 'books'},
+    {label: 'Movies', dataTarget: 'movies'},
   ];
+  public currentTab?: string;
+
+  constructor(private router: Router) {
+  }
+
+  ngOnInit() {
+    this.currentTab = window.location.pathname.slice(1);
+  }
+
+  public onTabClick(e: any) {
+    this.router.navigateByUrl(`/${e.detail}`);
+  }
 }
